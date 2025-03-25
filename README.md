@@ -9,6 +9,10 @@
 
 1. Clone the code.
 
+```
+git clone https://github.com/DepCPS/openpilot0.9.7.git
+```
+
 NOTE: This repository uses Git LFS for large files. Ensure you have Git LFS installed and set up before cloning or working with it.
 
 2. Run the setup script
@@ -79,4 +83,42 @@ Start bridge processes located in tools/sim:
 
 ```
 ./run_bridge.py --scenario 1 --initial_dis 10 --driver_time 250
+```
+
+## Usage examples
+
+### Single simulation
+
+1. Initializing fault injection.
+
+```
+python fault_type.py none
+```
+
+2. Launching openpilot
+
+```
+poetry shell
+./tools/sim/launch_openpilot.sh
+```
+
+3. Launching Metadrive
+
+```
+poetry shell
+./tools/sim/run_bridge.py --scenario 1 --initial_dis 10 --driver_time 250
+```
+
+### Simulation loop
+
+1. Initializing fault injection.
+
+```
+python fault_type.py none
+```
+
+2. Run script
+
+```
+./simulation_loop.sh
 ```
