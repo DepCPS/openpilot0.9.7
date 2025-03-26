@@ -26,13 +26,14 @@ def parse_args(add_args=None):
   parser.add_argument('--dual_camera', action='store_true')
 
   parser.add_argument('--scenario', type=int, default=1)
-  parser.add_argument('--initial_dis', type=int, default=50)
+  parser.add_argument('--initial_dis', type=int, default=10)
   parser.add_argument('--driver_time', type=int, default=250)
   parser.add_argument('--safety_checker', action='store_true', help='Enable pandas safety check')
   parser.add_argument('--aeb', action='store_true', help='Enable AEB')
   parser.add_argument('--driver_brake', action='store_true', help='Enable driver brake react')
   parser.add_argument('--driver_lateral', action='store_true', help='Enable driver lateral react')
   parser.add_argument('--ml', action='store_true', help='Enable ML model')
+  parser.add_argument('--aeb_independent', action='store_true', help='Enable independent AEB data')
 
 
   return parser.parse_args(add_args)
@@ -43,10 +44,17 @@ if __name__ == "__main__":
   metadrive_process.initial_dis = args.initial_dis
   metadrive_process.driver_reaction_time = args.driver_time
   metadrive_process.Panda_SafetyCheck_Enable = args.safety_checker
-  metadrive_process.AEB_React_Enable = args.aeb
+  #metadrive_process.AEB_React_Enable = args.aeb
   metadrive_process.Driver_react_Enable = args.driver_brake
   metadrive_process.Driver_lateral_react_Enable = args.driver_lateral
   metadrive_process.ml_model_Enable = args.ml
+
+  if args.aeb:
+    metadrive_process.AEB_React_Enable = True
+    metadrive_process.aeb_independent = False
+  if args.aeb_independent:
+    metadrive_process.AEB_React_Enable = True
+    metadrive_process.aeb_independent = True
 
   queue, simulator_process, simulator_bridge = create_bridge(args.dual_camera, args.high_quality)
 
